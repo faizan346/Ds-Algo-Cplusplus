@@ -23,14 +23,14 @@ void displayGraph(vector<Edge> *graph, int v) {
     }
 }
 
-bool hasPath(vector<Edge> *graph, int v, int src, int des, bool *visited) {
+bool hasPath(vector<Edge> *graph, int src, int des, bool *visited) {
     if(src == des) {
         return true;
     }
     visited[src] = true;
     for(auto e : graph[src]) {
         if(!visited[e.des]) {
-            if(hasPath(graph, v, e.des, des, visited)) {
+            if(hasPath(graph, e.des, des, visited)) {
                 return true;
             }
         }
@@ -55,7 +55,7 @@ int main() {
         graph[src].push_back(Edge(src, des, wt));
         graph[des].push_back(Edge(des, src, wt));
     }
-    cout << hasPath(graph, v, 4, 5, visited) << endl;
+    cout << hasPath(graph, 4, 5, visited) << endl;
     return 0;
 }
 
