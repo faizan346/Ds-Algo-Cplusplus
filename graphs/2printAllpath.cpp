@@ -47,7 +47,8 @@ int main() {
     int n, v;
     cin >> v >> n;
     vector<Edge> graph[v];
-    bool visited[v] = {0};
+    bool visited[v];
+    memset(visited, 0, sizeof(visited));
     for(int i = 0; i < n; i++) {
         int src, des , wt;
         cin >> src >> des >> wt;

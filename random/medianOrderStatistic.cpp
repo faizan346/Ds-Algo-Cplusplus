@@ -47,7 +47,7 @@ int kthSmallest(int arr[], int l, int r, int k)
 			return kthSmallest(arr, l, pos-1, k);
 
 		// Else recur for right subarray
-		return kthSmallest(arr, pos+1, r, k-pos+l-1);
+		return kthSmallest(arr, pos+1, r, k-pos+l-1); //(k-1) - (pos - l)
 	}
 
 	// If k is more than number of elements in array
