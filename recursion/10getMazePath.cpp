@@ -26,16 +26,16 @@ vector<string> getMagePath(int i, int j, int n, int m) {
     return paths;
 }
 
-void printMazePath(int i, int j, int n, int m, string print) {
+void printMazePath(int i, int j, int n, int m, string psf) {
     if(i == n-1 && j == m-1) {
-        cout << print << endl;
+        cout << psf << endl;
         return;
     }
     if(j+1 < m) {
-        printMazePath(i, j+1, n , m, print + "h");
+        printMazePath(i, j+1, n , m, psf + "h");
     }
     if(i+1 < n) {
-        printMazePath(i+1, j, n , m, print + "v");
+        printMazePath(i+1, j, n , m, psf + "v");
     }
 }
 
