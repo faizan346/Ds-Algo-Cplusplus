@@ -49,13 +49,12 @@ int main() {
         ////
         //by writing visit here we can actually know that we can come here from
         //different path but if i put this in these statement in below comment
-        //it would have come here because even before exploring the real thing 
+        //it would not have come here because even before exploring the real thing 
         //it would be marked and can be push into queue through other nodes
         if(visited[p.src]) {
             continue;
         }
         visited[p.src] = true;
-        ///
         cout << p.src << "@" << p.psf << endl;
         for(auto e : graph[p.src]) {
             if(!visited[e.des]) {

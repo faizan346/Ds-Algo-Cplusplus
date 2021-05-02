@@ -31,7 +31,7 @@ struct CompareWeightSofar {
         return p1.wsf > p2.wsf;
     }
 };
-
+//it will assign shortest path from src node to all other nodes.
 void dijkstra(vector<Edge> *graph, int src, bool *visited) {
     string psf = "";
     psf = (char)(src + '0');

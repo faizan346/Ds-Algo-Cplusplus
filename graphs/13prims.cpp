@@ -31,7 +31,7 @@ struct CompareWeightSofar {
         return p1.wt > p2.wt;
     }
 };
-
+//it will give the minumum cost to connect all nodes with given edges
 void prims(vector<Edge> *graph, int src, bool *visited) {
     string psf = "";
     psf = (char)(src + '0');
