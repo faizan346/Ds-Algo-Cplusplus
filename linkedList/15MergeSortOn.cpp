@@ -227,6 +227,27 @@ class LinkedList {
         }
         return list3;
     }
+    Node* middleNode(Node* head, Node* tail) {
+        Node* front = head;
+        Node* rear = head;
+        while(front->next != tail && front != tail) {
+            front = front->next->next;
+            rear = rear->next;
+        }
+        return rear;
+    }
+    LinkedList mergeSort(Node* head, Node* tail) { 
+        if(head == tail) {
+            LinkedList list;
+            list.addFirst(head->data);
+            return list;
+        }
+        Node* mid = middleNode(head, tail);
+        LinkedList lh = mergeSort(head, mid);
+        LinkedList rh = mergeSort(mid->next, tail);
+        LinkedList list = mergeTwoSortedList(lh, rh);
+        return list;
+    }
     void display() {
         Node* temp = head;
         while(temp) {
@@ -237,47 +258,17 @@ class LinkedList {
     }
 };
 
-LinkedList mergeTwoSortedList(LinkedList l1, LinkedList l2) {
-    Node* one = l1.head;
-    Node* two = l2.head;
-    LinkedList list3;
-    while(one!=NULL && two!=NULL) {
-        if(one->data <= two->data) {
-            list3.addLast(one->data);
-            one = one->next;
-        } else {
-            list3.addLast(two->data);
-            two = two->next;
-        }
-    }
-    while(one!=NULL) {
-        list3.addLast(one->data);
-        one = one->next;
-    }
-    while(two!=NULL) {
-        list3.addLast(two->data);
-        two = two->next;
-    }
-    return list3;
-}
 
 int main() {
-    LinkedList list1, list2;
-    list1.addLast(1);
-    list1.addLast(8);
-    list1.addLast(19);
-    list1.addLast(30);
-    list2.addLast(2);
-    list2.addLast(9);
-    list2.addLast(90);
-    list1.display();
-    list2.display();
-    //it doesn't delete nodes of list1 and list2 after
-    LinkedList list3 = mergeTwoSortedList(list1, list2);
-    list3.display();
-    //it deletes every elemtent from list1 and list2 helpful in mergesort
-    list3 = list1.mergeTwoSortedList(list1, list2);
-    list3.display();
-
+    LinkedList list;
+    list.addLast(43);
+    list.addLast(23);
+    list.addLast(90);
+    list.addLast(1);
+    list.addLast(33);
+    list.addLast(23);
+    list.display();
+    LinkedList listSorted = list.mergeSort(list.head, list.tail);
+    listSorted.display();
     return 0;
 }
