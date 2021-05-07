@@ -212,31 +212,76 @@ void mirror(Node* node) {
 }
 
 void removeLeaves(Node* node) {
-    //it is correct but could be cleaner other way
-    // for(auto it = node->children.begin(); it !=node->children.end(); it++) {
-    //     Node *child = *it;
-    //     if(child->children.empty()) {
-    //         node->children.erase(it);
-    //         it--;
-    //     }
-    // }
-    //it is the correct way but little bit complex in pointer form
-    // for(auto it = node->children.rbegin(); it != node->children.rend(); it++) {
-    //     Node *child = *it;
-    //     if(child->children.empty()) {
-    //         node->children.erase(next(it).base());
-    //     }   
-    // }
     for(int i = node->children.size()-1; i >= 0; i--) {
         Node* child = node->children[i];
         if(child->children.empty()) {
-            delete child;
             node->children.erase(node->children.begin() + i);
         }
     }
     for(auto child : node->children) {
         removeLeaves(child);
     }
+}
+
+Node *getTail(Node* node) {
+    while(node->children.size() > 0) {
+        node = node->children.front();
+    }
+    return node;
+}
+//o(n^2) time
+void linearizeTheTree(Node* node) {
+    for(auto child : node->children) {
+        linearizeTheTree(child);
+    }
+    
+    while(node->children.size() > 1) {
+        Node *lchild = node->children.back();
+        node->children.pop_back();
+        Node *slChild = node->children.back();
+        Node *slTail = getTail(slChild);
+        slTail->children.push_back(lchild);
+    }
+
+}
+//taking o(n) extra Space o(n^2) time
+// Node* linearize(Node* node) {
+//     if(node->children.empty()) {
+//         return node;
+//     }
+//     vector<Node*> lastNodes;
+//     for(auto child : node->children) {
+//         lastNodes.push_back(linearize(child));
+//     }
+//     Node* last = lastNodes.back();
+//     lastNodes.pop_back();
+//     while(node->children.size() > 1) {
+//         Node *lchild = node->children.back();
+//         node->children.pop_back();
+//         Node *slChild = node->children.back();
+//         Node *slTail = lastNodes.back();
+//         lastNodes.pop_back();
+//         slTail->children.push_back(lchild);
+//     }
+//     return last;
+
+// }
+//no exta space o(n) time
+Node* linearize(Node* node) {
+    if(node->children.empty()) {
+        return node;
+    }
+    Node* nodeLast = linearize(node->children.back());
+    while(node->children.size() > 1) {
+        Node *last = node->children.back(); //save last element
+        node->children.pop_back(); // remove last element
+        Node *slChild = node->children.back(); // secondLast of rem child
+        Node *slChildLastChild = linearize(slChild); // it's last child after linearize
+        slChildLastChild->children.push_back(last); //sl last child point to last child
+
+    }
+    return nodeLast;
+
 }
 
 int main() {
@@ -262,7 +307,7 @@ int main() {
             st.push(node);
         }
     }
-    removeLeaves(root);
+    linearize(root);
     display(root);
     return 0;
 }
