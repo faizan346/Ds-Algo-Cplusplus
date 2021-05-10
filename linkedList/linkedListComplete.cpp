@@ -242,7 +242,7 @@ class LinkedList {
 
     }
     //wihout size
-    void kReverseWihoutSize(int k) {
+     void kReverseWihoutSize(int k) {
         LinkedList list;
         Node* f = head;
         Node* b = head;
@@ -250,11 +250,11 @@ class LinkedList {
         for(int i = 0; i < k-1; i++) {
             f = f->next;
         }
-        while(f != tail) {
+        while(f != NULL) {
             LinkedList rev;
             for(int i = 0; i < k; i++) {
                 rev.addFirst(b->data);
-                if(f != tail) {
+                if(f != NULL) {
                     f = f->next;
                 }
                 b = b->next;
@@ -453,13 +453,13 @@ class LinkedList {
         return list3;
     }
     Node* middleNode(Node* head, Node* tail) {
-        Node* front = head;
-        Node* rear = head;
-        while(front->next != tail && front != tail) {
-            front = front->next->next;
-            rear = rear->next;
+        Node* fast = head;
+        Node* slow = head;
+        while(fast != tail && fast->next != tail) {
+            fast = fast->next->next;
+            slow = slow->next;
         }
-        return rear;
+        return slow;
     }
     LinkedList mergeSort(Node* head, Node* tail) { 
         if(head == tail) {
@@ -494,12 +494,14 @@ int main() {
     list1.addLast(5);
     list2.addLast(7);
     list2.addLast(9);
-    list2.tail->next = list1.getNodeAt(3);
-    list2.tail = list1.tail;
-    list2.size = 5;
+    list1 = list1.mergeSort(list1.head, list1.tail);
     list1.display();
-    list2.display();
-    cout << list1.intersectionTwoList(list1, list2)->data << endl;
+    // list2.tail->next = list1.getNodeAt(3);
+    // list2.tail = list1.tail;
+    // list2.size = 5;
+    // list1.display();
+    // list2.display();
+    // cout << list1.intersectionTwoList(list1, list2)->data << endl;
     
 
     return 0;

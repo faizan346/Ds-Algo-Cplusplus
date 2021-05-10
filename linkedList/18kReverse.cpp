@@ -253,11 +253,11 @@ class LinkedList {
         for(int i = 0; i < k-1; i++) {
             f = f->next;
         }
-        while(f != tail) {
+        while(f != NULL) {
             LinkedList rev;
             for(int i = 0; i < k; i++) {
                 rev.addFirst(b->data);
-                if(f != tail) {
+                if(f != NULL) {
                     f = f->next;
                 }
                 b = b->next;
@@ -327,10 +327,8 @@ int main() {
     list.addLast(2);
     list.addLast(13);
     list.addLast(8);
-    list.addLast(9);
-    list.addLast(12);
     list.display();
-    list.kReverse(3);
+    list.kReverseWihoutSize(3);
     list.display();
 
     return 0;
