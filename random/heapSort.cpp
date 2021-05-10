@@ -23,6 +23,7 @@ void heapSort(int *a, int n) {
         heapify(a, n, i);
     }
     //delete max until heap gets empty.
+    //and we do this for n-1 element as last element is already placed
     for(int i = n-1; i > 0; i--) {
         swap(a[0], a[i]);       //deleting first element.
         heapify(a, i, 0);
