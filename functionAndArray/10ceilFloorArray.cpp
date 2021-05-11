@@ -13,7 +13,7 @@ void printCeilFloor(int *a, int l, int r, int k) {
             l = mid + 1;
         }
     }
-    if(l >= r) {
+    if(l >= r) { // i think it should be l == r
         if(l < n) cout << "ceil : " << a[l] << " ";
         if(r > -1) cout << "floor : " << a[r];
         cout << endl;

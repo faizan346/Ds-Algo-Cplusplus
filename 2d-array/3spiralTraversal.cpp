@@ -15,6 +15,9 @@ int main() {
     int rmin = 0, rmax = n-1;
     int cmin = 0, cmax = m-1;
     while(count < tne) {
+        ///count < tne we apply this on every for loop
+        //cmin,cmax,rmin,rmax still keep changing even thoguh everything already
+        //is iterated so to stop further iterations we make double sure by putting the conditional
         //left wall
         for(int i = rmin; i <= rmax && count < tne; i++) {
             count++;
