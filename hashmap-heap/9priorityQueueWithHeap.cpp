@@ -26,7 +26,7 @@ class PriorityQueue {
         }
     }
     //recursive
-    void DownHeapify(int i) {
+    void downHeapify(int i) {
         int leftChild = 2 * i + 1;
         int rightChild = 2 * i + 2;
         int minInd = i;
@@ -38,11 +38,11 @@ class PriorityQueue {
         }
         if(minInd != i) {
             swap(v[i], v[minInd]);
-            DownHeapify(minInd);
+            downHeapify(minInd);
         }
     }
     //iterative
-    void DownHeapify() {
+    void downHeapify() {
         int i = 0;
         while(true) {
             int leftChild = 2 * i + 1;
@@ -63,6 +63,15 @@ class PriorityQueue {
         }
     }
     public:
+    PriorityQueue() {}
+    PriorityQueue(int *a, int n) {
+        for(int i = 0 ; i < n; i++) {
+            v.push_back(a[i]);
+        }
+        for(int i = n/2 - 1; i >= 0; i--) {
+            downHeapify(i);
+        }
+    }
     void push(int val) {
         v.push_back(val);
         //upHeapify(size()-1);
@@ -75,8 +84,8 @@ class PriorityQueue {
         }
         swap(v[0], v[size()-1]);
         v.pop_back();
-        //DownHeapify(0);
-        DownHeapify();
+        //downHeapify(0);
+        downHeapify();
     }
     int top() {
         if(size() == 0) {
@@ -97,6 +106,9 @@ class PriorityQueue {
 };
 
 int main() {
+    // int a[] = {32,51,6,12,66,12,9,10};
+    // int n = sizeof(a)/sizeof(a[0]);
+    // PriorityQueue pq(a, n);
     PriorityQueue pq;
     pq.push(53);
     cout << pq.top() << endl;
