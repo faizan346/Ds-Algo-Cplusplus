@@ -25,6 +25,19 @@ int stockExchange(vector<int>& a, int k) {
     return dp[k][a.size()-1];
 }
 
+int stockExchangeOp(vector<int>& a, int k) {
+    vector<vector<int>> dp(k+1, vector<int>(a.size(), 0));
+    for(int i = 1; i < dp.size(); i++) {
+        //max k - 1 transaction + buy
+        int mkmot = INT_MIN;
+        for(int j = 1; j < dp[0].size(); j++) {
+            mkmot = max(mkmot, dp[i-1][j-1] - a[j-1]);
+            dp[i][j] = max(dp[i][j-1], mkmot + a[j]);
+        }
+    }
+    return dp[k][a.size()-1];
+}
+
 // 6
 // 9 6 7 6 3 8
 // 3
@@ -41,6 +54,7 @@ int main() {
     int k;
     cin >> k;
     cout << stockExchange(a, k) << endl;
+    cout << stockExchangeOp(a, k) << endl;
     vector<vector<int>> t(a.size()+1, vector<int>(k+1, -1));
     cout << stockExchange(a, a.size(), k, t) << endl;
     return 0;
