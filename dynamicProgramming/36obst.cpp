@@ -3,7 +3,7 @@ using namespace std;
 
 int obst(vector<int>& keys, vector<int>& freq, int n) {
     vector<vector<int>> dp(n, vector<int>(n, 0));
-    
+
     for(int g = 0; g < n; g++) {
         for(int i = 0, j = g; j < n; j++, i++) {
             if(g == 0) {
@@ -33,7 +33,10 @@ int obst(vector<int>& keys, vector<int>& freq, int n) {
     }
     return dp[0][n-1];
 }
-
+// 4
+// 10 20 30 40
+// 3 1 2 1
+// 13
 int main() {
     int n;
     cin >> n;

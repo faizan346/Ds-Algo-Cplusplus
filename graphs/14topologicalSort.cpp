@@ -17,7 +17,8 @@ class Edge {
 //it helps to tell the priority/order of the task to be done but
 //sometimes we can't reach every node in one cycle that means we have no means
 //to know which cycle should occur first so their could be multitple answer for that 
-//depending which which cycle you iterating first
+//depending which  cycle you are iterating first
+
 void topoligicalSort(vector<Edge> *graph, int src, bool* visited, stack<int> &s) {
     visited[src] = true;
     for(auto e: graph[src]) {
