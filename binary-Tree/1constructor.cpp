@@ -23,12 +23,40 @@ class Pair {
     }
 };
 
+void display(Node* root) {
+    if(root == NULL) return;
+    
+    if(root->left !=NULL) {
+        cout << root->left->data;
+    } else {
+        cout << ".";
+    }
+    cout << "<-" << root->data<< "->";
+    if(root->right != NULL) {
+        cout <<root->right->data;
+    } else {
+        cout << ".";
+    }
+    cout << endl;
 
+    display(root->left);
+    display(root->right);
+}
 
-int main() {
-    int a[] = {50, 25, 12, -1, -1, 37, 30, -1, -1, -1, 75, 62, -1, 70, -1, -1, 87, -1, -1};
-    int n = sizeof(a)/sizeof(a[0]);
+Node *createTree(vector<int> &arr, int& ind) {
+    if (ind > arr.size() || arr[ind] == -1) {
+        ind++;
+        return nullptr;
+    }
+    Node *node = new Node(arr[ind++]);
+    node->left = createTree(arr, ind);
+    node->right = createTree(arr, ind);
 
+    return node;
+}
+
+Node *createTree(vector<int> &a) {
+    int n = a.size();
     stack<Pair> st;
     Node* root;
     for(int i = 0; i < n; i++) {
@@ -60,5 +88,18 @@ int main() {
             st.push(Pair(node, 0));
         }
     }
+    return root;
+}
+
+int main() {
+    vector<int> a{50, 25, 12, -1, -1, 37, 30, -1, -1, -1, 75, 62, -1, 70, -1, -1, 87, -1, -1};
+
+    Node* root1 = createTree(a);
+    display(root1);
+    cout << endl;
+    int ind = 0;
+    Node* root2 = createTree(a, ind);
+    display(root2);
+
     return 0;
 }
