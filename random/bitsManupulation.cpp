@@ -13,7 +13,7 @@ bool isPowerTwo(int x) {
 bool isPowerTwoBits(int x) {
     //(x&(x-1)) in x-1 chagne rightmost set bit to end bit into opposite bits.
     // and with & opp with x give zero for all those right bits starting with righmost set bit.
-    return (x && !(x&(x-1)));
+    return (x && !(x&(x-1))); // also handles zero
 }
 //counting number of ones in bits representation of a number.
 // logN in general if we divide by 2 to find nubmer of ones.
