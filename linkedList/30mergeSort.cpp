@@ -43,18 +43,6 @@ Node* midNode(Node* head) {
     return s;
 }
 
-Node* reverse(Node* head) {
-    Node* prev = NULL;
-    Node* curr = head;
-    while(curr) {
-        Node* next = curr->next;
-        curr->next = prev;
-        prev = curr;
-        curr = next;
-    }
-    return prev;
-}
-
 Node* mergeTwoSortedLists(Node* head1, Node* head2) {
     Node* c1 = head1;
     Node* c2 = head2;
@@ -71,23 +59,30 @@ Node* mergeTwoSortedLists(Node* head1, Node* head2) {
             c2 = c2->next;
         }
     }
-    if(c1 != NULL) {
-        tail3->next = c1;
-    }
-    if(c2 != NULL) {
-        tail3->next = c2;
-    }
+    tail3->next = c1 ? c1 : c2;
     return dummy->next;
+}
+
+Node* mergeSort(Node* head) {
+    if(head == NULL || head->next == NULL) return head;
+
+    Node* mid = midNode(head);
+    Node* headlh = head;
+    Node* headrh = mid->next;
+    mid->next = NULL;
+
+    headlh = mergeSort(headlh);
+    headrh = mergeSort(headrh);
+
+    Node* sortedList = mergeTwoSortedLists(headlh, headrh);
+    return sortedList;
 }
 
 int main() {
     int n;
     cin >> n;
-    Node* head1 = createList(n);
-    int m;
-    cin >> m;
-    Node* head2 = createList(m);
-    Node* head3 = mergeTwoSortedLists(head1, head2);
-    display(head3);
+    Node* head = createList(n);
+    head = mergeSort(head);
+    display(head);
     return 0;
 }
