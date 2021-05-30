@@ -47,8 +47,8 @@ class Compare {
     }
 };
 
-
-int reverseEdges(vector<Edge>* graph, int src, int des, vector<bool>& visited) {
+// o(V + ElogV)
+int reverseEdges1(vector<Edge>* graph, int src, int des, vector<bool>& visited) {
     priority_queue<Pair, vector<Pair>, Compare> pq;
     pq.push(Pair(src, 0));
     while(!pq.empty()) {
@@ -61,6 +61,31 @@ int reverseEdges(vector<Edge>* graph, int src, int des, vector<bool>& visited) {
         for(auto e : graph[p.src]) {
             if(visited[e.nbr]) continue;
             pq.push(Pair(e.nbr, p.pwsf + e.wt));
+        }
+    }
+    return -1;
+}
+//0-1 bfs
+// o(v + E) we can use list to store info as we have wt 0 and 1 only
+int reverseEdges2(vector<Edge>* graph, int src, int des, vector<bool>& visited) {
+    list<Pair> queue;
+    queue.push_back(Pair(src, 0));
+    while(!queue.empty()) {
+        Pair p = queue.front();
+        queue.pop_front();
+        if(p.src == des) {
+            return p.pwsf;
+        }
+        visited[p.src] = true;
+        for(auto e : graph[p.src]) {
+            if(visited[e.nbr]) continue;
+            // it kind of pirority queeu becoz we have smaller element at top
+            // this is possible because we have change of one at max.
+            if(e.wt == 0) {
+                queue.push_front(Pair(e.nbr, p.pwsf + 0));
+            } else {
+                queue.push_back(Pair(e.nbr, p.pwsf + 1));
+            }
         }
     }
     return -1;
@@ -82,6 +107,6 @@ int main() {
     // vector<int> t(v, -1);
     // int ans = dfs(graph, 0, v-1, visited, t);
     // cout << ((ans >= 1e8) ? -1 : ans) << endl;
-    cout << reverseEdges(graph, 0, v-1, visited) << endl;
+    cout << reverseEdges2(graph, 0, v-1, visited) << endl;
     return 0;
 }
