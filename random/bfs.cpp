@@ -30,16 +30,14 @@ int main() {
     cout << "bfs : ";
     queue<int> q;
     q.push(src);
+    visited[src] = true;
     while(!q.empty()) {
         int v = q.front();
         q.pop();
-        if(visited[v]) {
-            continue;
-        }
-        visited[v] = true;
         cout << v << " ";
         for(auto e : graph[v]) {
             if(!visited[e.nbr]) {
+                visited[e.nbr] = true;
                 q.push(e.nbr);
             }
         }

@@ -13,42 +13,40 @@ class Edge {
     }
 };
 
-class Pair {
+class PairEdge {
     public:
     int src;
     int parent;
     int wt;
-    Pair(int s, int p, int w) {
+    PairEdge(int s, int p, int w) {
         src = s;
         parent = p;
         wt = w;
     }
 };
 
-struct CompareWeightSofar {
-    bool operator()(Pair const& p1, Pair const& p2)
-    {
+struct CompareWeightEdge {
+    bool operator()(PairEdge const& p1, PairEdge const& p2) {
         return p1.wt > p2.wt;
     }
 };
 //it will give the minumum cost to connect all nodes with given edges
 void prims(vector<Edge> *graph, int src, bool *visited) {
-    string psf = "";
-    psf = (char)(src + '0');
-    priority_queue<Pair, vector<Pair>, CompareWeightSofar> pq;
-    pq.push(Pair(src, -1, 0));
+    priority_queue<PairEdge, vector<PairEdge>, CompareWeightEdge> pq;
+    pq.push(PairEdge(src, -1, 0));
     while(!pq.empty()) {
-        Pair p = pq.top();
+        PairEdge p = pq.top();
         pq.pop();
         if(visited[p.src]) {
             continue;
         }
         visited[p.src] = true;
-        if(p.parent != -1)
-            cout << p.src << "via" << p.parent <<"@" << p.wt << endl;  
+        if(p.parent != -1) {
+            cout << p.parent << " --- " << p.src <<"  @" << p.wt << endl;
+        }
         for(auto e : graph[p.src]) {
             if(!visited[e.nbr]) {
-                pq.push(Pair(e.nbr, p.src, e.wt));
+                pq.push(PairEdge(e.nbr, p.src, e.wt));
             }
         }
     }
