@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-void lps(string s) {
+void cps(string s) {
     int n = s.size();
     vector<vector<int>> dp(n, vector<int>(n, 0));
     int count = 0;
@@ -23,7 +23,7 @@ void lps(string s) {
     cout << count << endl;
 }
 
-void lpsNew(string s) {
+void cpsNew(string s) {
     int n = s.size();
     vector<vector<int>> dp(n, vector<int>(n, 0));
     for(int g = 0; g < n; g++) {
@@ -46,6 +46,6 @@ int main() {
     string s1;
     cin >> s1;
     // lps(s1);
-    lpsNew(s1);
+    cpsNew(s1);
     return 0;
 }
