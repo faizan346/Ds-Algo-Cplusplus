@@ -48,6 +48,31 @@ bool checkCompBipartite(vector<Edge> *graph, int src, int *visited) {
     }
     return true;
 }
+bool isBipartite(vector<vector<int>>& graph) {
+    vector<int> visited(graph.size(), -1);
+    for(int  i = 0; i < graph.size()-1; i++) {
+        if(visited[i] != -1) continue;
+        queue<pair<int, int>> q;
+        q.push({i, 1});
+        visited[i] = 1;
+        while(!q.empty()) {
+            pair<int, int> p = q.front();
+            q.pop();
+            int u = p.first;
+            int color = p.second;
+            for(auto v : graph[u]) {
+                if(visited[v] == -1) {
+                    visited[v] = ((color == 1) ? 2 : 1);
+                    q.push({v, visited[v]});
+                } else { // it gonna check parent too which is not needed but still satisfy the case
+                    if(visited[v] != ((color == 1) ? 2 : 1))
+                        return false;
+                }
+            }
+        }
+    }
+    return true;
+}
 
 int main() {
     int v, n;

@@ -408,16 +408,15 @@ bool mirrorShape(Node* node1, Node* node2) {
         return false;
     }
     int i = 0;
-    int j = node1->children.size()-1;
-    while(i < j) {
+    int n = node1->children.size();
+    while(i < n) {
         //ith child of tree1 hamra mirror shape hona chaye to n-1-i th child of tree2
         // ka to make the tree mirror shape
-        bool mirror = mirrorShape(node1->children[i], node2->children[j]);
+        bool mirror = mirrorShape(node1->children[i], node2->children[n-1-i]);
         if(!mirror) {
             return false;
         }
         i++;
-        j--;
     }
     return true;
 }
