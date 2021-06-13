@@ -16,7 +16,7 @@ void floydWarshall(vector<vector<Edge>>& graph) {
     // stores the shortest path between two vertices
     // with different set of intermediatry vertices
     vector<vector<int>> dist(v, vector<int>(v, INT_MAX));
-    // when there is no intermediate vertex between the vertex
+    // when there is no intermediate vertex between the vertices
     for(int i = 0; i < v; i++) {
         for(auto e : graph[i]) {
             dist[e.src][e.nbr] = e.wt;

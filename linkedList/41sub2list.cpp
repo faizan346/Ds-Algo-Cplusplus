@@ -29,7 +29,7 @@ ListNode *midNode(ListNode *head)
     return slow;
 }
 
-ListNode* reverseList(ListNode* head) {
+ListNode* reverse(ListNode* head) {
     ListNode* pre = NULL;
     ListNode* curr = head;
     while(curr) {
@@ -41,68 +41,43 @@ ListNode* reverseList(ListNode* head) {
     return pre;
 }
 
-ListNode *addTwoNumbers2(ListNode *l1, ListNode *l2)
+ListNode *subtractTwoNumbers(ListNode *l1, ListNode *l2)
 {
-    l1 = reverseList(l1);
-    l2 = reverseList(l2);
+    if(l1 == NULL) return NULL;
+    l1 = reverse(l1);
+    l2 = reverse(l2);
     ListNode* dummy = new ListNode(-1);
-    ListNode *t1 = l1, *t2 = l2, *t3 = dummy;
+    ListNode* t1 = l1, *t2 = l2, *t3 = dummy;
     int c = 0;
-    while(t1 || t2 || c > 0) {
-        int digitValue = (((t1)?t1->val:0) + ((t2)?t2->val:0) + c) % 10;
-        c = (((t1)?t1->val:0) + ((t2)?t2->val:0) + c) / 10;
-        t3->next = new ListNode(digitValue);
-        if(t1) t1 = t1->next;
-        if(t2) t2 = t2->next;
-        t3 = t3->next;
-    }
-    
-    ListNode* l3 = dummy->next;
-    delete dummy;
-    l1 = reverseList(l1);
-    l2 = reverseList(l2);
-    l3 = reverseList(l3);
-    return l3;
-}
-
-ListNode *addTwoNumbers(ListNode *l1, ListNode *l2)
-{
-    l1 = reverseList(l1);
-    l2 = reverseList(l2);
-    ListNode* dummy = new ListNode(-1);
-    ListNode *t1 = l1, *t2 = l2, *t3 = dummy;
-    int c = 0;
-    while(t1 && t2) {
-        int digitValue = (t1->val + t2->val + c) % 10;
-        c = (t1->val + t2->val + c) / 10;
-        t3->next = new ListNode(digitValue);
+    while(t2) {
+        int d1 = t1->val;
+        int d2 = t2->val;
+        d1 = d1 + c;
+        if(d1 < d2) {
+            t3->next = new ListNode(10 + d1 - d2);
+            c = -1;
+        } else {
+            t3->next = new ListNode(d1 - d2);
+            c = 0;
+        }
         t1 = t1->next;
         t2 = t2->next;
         t3 = t3->next;
     }
     while(t1) {
-        int digitValue = (t1->val + c) % 10;
-        c = (t1->val + c) / 10;
-        t3->next = new ListNode(digitValue);
+        int d1 = t1->val + c;
+        c = 0;
+        t3->next = new ListNode(d1);
         t1 = t1->next;
         t3 = t3->next;
     }
-    while(t2) {
-        int digitValue = (t2->val + c) % 10;
-        c = (t2->val + c) / 10;
-        t3->next = new ListNode(digitValue);
-        t2 = t2->next;
-        t3 = t3->next;
-    }
-    if(c > 0) {
-        t3->next = new ListNode(c);
-    }
-    ListNode* l3 = dummy->next;
+    ListNode *l3 = dummy->next;
+    l1 = reverse(l1);
+    l2 = reverse(l2);
+    l3 = reverse(l3);
     delete dummy;
-    l1 = reverseList(l1);
-    l2 = reverseList(l2);
-    l3 = reverseList(l3);
     return l3;
+    
 }
 
 // Input_code===================================================
@@ -142,7 +117,7 @@ int main()
     cin >> m;
     ListNode *head2 = makeList(m);
 
-    ListNode *head = addTwoNumbers(head1, head2);
+    ListNode *head = subtractTwoNumbers(head1, head2);
     printList(head);
 
     return 0;
