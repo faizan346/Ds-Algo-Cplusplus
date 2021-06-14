@@ -49,6 +49,7 @@ void prims(vector<vector<Edge>>& graph, int src) {
     }
     cout << "v   u   wt" << endl;
     for(int i = 1; i < v; i++) {
+        if(i == src) continue;
         cout << par[i] << "   " << i << "   " << dist[i] << endl;
     }
 }

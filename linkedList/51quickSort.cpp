@@ -67,17 +67,17 @@ ListNode *quickSort(ListNode *head)
     ListNode* pi = randomPivotNode(head);
     ListNode* plist = segregate(head, pi); // partition list;
     
-    //find pre of partition index
+    //find pre of partition node
     ListNode *pre = NULL, *curr = plist;
     while(curr != pi) {
         pre = curr;
         curr = curr->next;
     }
-    // separet the lists;
+    // separate the lists;
     if(pre != NULL) pre->next = NULL; 
     ListNode *left = (pre == NULL) ? NULL : plist;
     ListNode* right = pi->next;
-    //sort them separetely
+    //sort them separately
     left = quickSort(left);
     right = quickSort(right);
     //join the two lists with partition node;
