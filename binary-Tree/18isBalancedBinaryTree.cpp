@@ -393,7 +393,7 @@ int isbalancedTreeReturnHeight(Node* root, bool& isBal) {
     if(abs(lh - rh) > 1) {
         isBal = false;
     }
-    return lh + rh + 2;
+    return max(lh, rh) + 1;
 }
 
 int main() {
