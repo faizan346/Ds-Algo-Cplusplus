@@ -54,15 +54,15 @@ void eulerianPathAndCircuit2(unordered_map<int, vector<Edge>>& graph, int src, i
         }
     }
     int notMatch = 0;
-    int posDes;
+    int des;
     for(int v = 0; v < n; v++) {
         if(inDegree[v] != outDegree[v]) notMatch++; 
-        if(notMatch == 2) posDes = v; 
+        if(notMatch != 0 && v != src) des = v; 
     }
     if(notMatch == 0) {
         cout << "eulerianCircuit" << endl;
     } else if(notMatch == 2 && outDegree[src] == (inDegree[src] + 1) 
-            && inDegree[posDes] == (outDegree[posDes] + 1)) {
+            && inDegree[des] == (outDegree[des] + 1)) {
         cout << "eulerianPath" << endl;
     } else {
         cout << "neither" << endl;
