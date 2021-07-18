@@ -16,49 +16,35 @@ public:
   }
 };
 
-class BSTIterator
-{
-    stack<pair<TreeNode*, int>> st;
+class BSTIterator {
+    stack<TreeNode*> st;
 public:
-  BSTIterator(TreeNode* root)
-  {
-      st.push({root, 1});
-      // state = 1 => print and push left child 
-      // state = 2 => push right child
-      // state = 3 => pop
-  }
-
-  int next()
-  {
-      int data = -1;
-      while(!st.empty()) {
-          pair<TreeNode*, int> &p = st.top();
-          TreeNode* &node = p.first;
-          if(p.second == 1) {
-                if(node->left) st.push({node->left, 1});
-                p.second = 2;
-                
-          } else if(p.second == 2) {
-                if(node->right) st.push({node->right, 1});
-                p.second = 3;
-                data = node->val;
-                break;
-          } else {
-                st.pop();
-          }
-      }
-      return data;
-  }
-
-  bool hasNext()
-  {
-      while(!st.empty()) {
-          pair<TreeNode*, int> &p = st.top();
-          if(p.second == 3) st.pop();
-          else return true;
-      }
-      return false;
-  }
+    BSTIterator(TreeNode* root) {
+        // push all leftside node into stack
+        while(root != NULL) {
+            st.push(root);
+            root = root->left;
+        }
+    }
+    
+    int next() {
+        // pop and return data while push all leftnodes of right node into stack
+        int data = -1;
+        TreeNode *node = st.top();
+        st.pop();
+        data = node->val;
+        node = node->right; // right node
+        while(node != NULL) { // push leftnodes of right node
+            st.push(node);
+            node = node->left;
+        }
+        return data;
+    }
+    
+    bool hasNext() {
+        if(st.empty()) return false;
+        return true;
+    }
 };
 
 // input_Section_====================================================================

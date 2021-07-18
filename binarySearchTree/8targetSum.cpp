@@ -221,7 +221,6 @@ class PairIt {
 Node* getNextInorder(stack<PairIt>& sl) {
     while(!sl.empty()) {
         PairIt &p = sl.top();
-        sl.top();
         if(p.state == 1) { //pre, push ,state++
             if(p.node->left != NULL) {
                 sl.push(PairIt(p.node->left, 1));
@@ -243,7 +242,6 @@ Node* getNextInorder(stack<PairIt>& sl) {
 Node* getNextReverseInorder(stack<PairIt>& sr) {
     while(!sr.empty()) {
         PairIt &p = sr.top();
-        sr.top();
         if(p.state == 1) { //pre, push ,state++
             if(p.node->right != NULL) {
                 sr.push(PairIt(p.node->right, 1));
