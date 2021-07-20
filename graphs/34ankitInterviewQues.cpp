@@ -13,7 +13,7 @@ class Edge {
 
 int minDistance(vector<int>& dist, vector<bool>& visited) {
     int m = INT_MAX;
-    int index;
+    int index = 0;
     for(int v = 0; v < dist.size(); v++) {
         if(!visited[v] && m > dist[v]) {
             m = dist[v], index = v;
@@ -22,11 +22,9 @@ int minDistance(vector<int>& dist, vector<bool>& visited) {
     return index;
 }
 
-void dijkstra(vector<vector<Edge>>& graph, int src) {
+void dijkstra(vector<vector<Edge>>& graph, int src, int des, vector<int> &par, vector<bool> &visited) {
     int v = graph.size();
-    vector<bool> visited(v, false);
     vector<int> dist(v, INT_MAX);
-    vector<int> par(v, -1);
 
     dist[src] = 0;
     for(int i = 0; i < v-1; i++) { // v-1 iteration becoz last unvisited vertex won't have any neighbor to visit
@@ -35,14 +33,16 @@ void dijkstra(vector<vector<Edge>>& graph, int src) {
         for(auto e : graph[u]) {
             if(!visited[e.nbr] && dist[u] != INT_MAX) {
                 dist[e.nbr] = min(dist[e.nbr], dist[u] + e.wt);
-                par[e.nbr] = u; // could be used to show shortest paths between src and des
+                par[e.nbr] = u;
             }
         }
     }
-    
-    for(int i = 1; i < v; i++) {
-        cout << i << "      " << dist[i] << endl;
+    int u = des;
+    while(u != -1) {
+        cout << u << " ";
+        u = par[u];
     }
+    cout << endl;
 }
 
 int main() {
@@ -55,7 +55,32 @@ int main() {
         graph[src].push_back(Edge(src, nbr, wt));
         graph[nbr].push_back(Edge(nbr, src, wt));
     }
-    int src; 
-    cin >> src;
-    dijkstra(graph, src);
+    int src, des; 
+    cin >> src >> des;
+    vector<int> par(n, -1);
+    vector<bool> visited(v, false);
+    dijkstra(graph, src, des, par, visited);
+    visited = vector<bool>(v, false);
+    int u = par[des];
+    while(u != src) {
+        visited[u] = true;
+        u = par[u];
+    }
+    par = vector<int>(n, -1);
+    dijkstra(graph, des, src, par, visited);
 }
+
+// 7 9
+// 0 1 10
+// 0 3 40
+// 1 2 10
+// 3 2 10
+// 3 4 2
+// 4 5 3
+// 4 6 8
+// 5 6 3
+// 2 5 3 
+// 0 5
+
+// 5 2 1 0 
+// 0 3 4 5 

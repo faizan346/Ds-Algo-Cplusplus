@@ -18,7 +18,9 @@ class Pair {
     int src;
     string psf;
     int wsf;
-    Pair(int s, string p, int w) {
+    int par;
+    Pair(int s, int par, string p, int w) {
+        this->par = par;
         src = s;
         psf = p;
         wsf = w;
@@ -32,11 +34,12 @@ struct CompareWeightSofar {
     }
 };
 //it will assign shortest path from src node to all other nodes.
-void dijkstra(vector<Edge> *graph, int src, bool *visited) {
+void dijkstra(vector<Edge> *graph, int v, int src, bool *visited) {
+    vector<int> par(v, -1);
     string psf = "";
     psf = (char)(src + '0');
     priority_queue<Pair, vector<Pair>, CompareWeightSofar> pq;
-    pq.push(Pair(src, psf, 0));
+    pq.push(Pair(src, -1, psf, 0));
     while(!pq.empty()) {
         Pair p = pq.top();
         pq.pop();
@@ -44,10 +47,11 @@ void dijkstra(vector<Edge> *graph, int src, bool *visited) {
             continue;
         }
         visited[p.src] = true;
+        par[p.src] = p.par;
         cout << p.src << "via" << p.psf <<"@" << p.wsf << endl;  
         for(auto e : graph[p.src]) {
             if(!visited[e.nbr]) {
-                pq.push(Pair(e.nbr, p.psf + (char)(e.nbr + '0'), p.wsf + e.wt));
+                pq.push(Pair(e.nbr, p.src, p.psf + (char)(e.nbr + '0'), p.wsf + e.wt));
             }
         }
     }
@@ -67,7 +71,7 @@ int main() {
     memset(visited, 0, sizeof(visited));
     int src;
     cin >> src;
-    dijkstra(graph, src, visited);
+    dijkstra(graph, v, src, visited);
 
     return 0;
 }
